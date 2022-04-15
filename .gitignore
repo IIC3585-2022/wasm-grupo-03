@@ -1,0 +1,14 @@
+# VS Code stuff
+vscode
+*.code-workspace
+node_modules/
+.env
+.envrc
+# Local logs
+*.log
+# Local cache
+.parcel-cache/
+dist/
+
+# Testing
+test.js
