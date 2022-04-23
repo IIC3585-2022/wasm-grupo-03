@@ -1,5 +1,5 @@
 // C++ implementation of the approach
-#include <bits/stdc++.h>
+#include <iostream>
 using namespace std;
 
 // First segment's end index
@@ -11,7 +11,7 @@ static int pos2 = -1;
 // This function returns true if the array
 // can be divided into three equal sum segments
 bool equiSumUtil(int arr[], int n) {
-  // Prefix Sum Array
+  // Prefix Sum Arrays
   int pre[n];
   int sum = 0;
   for (int i = 0; i < n; i++) {
@@ -92,7 +92,7 @@ void equiSum(int arr[], int n) {
 }
 
 // Driver code
-int main() {
+extern "C++" int main() {
   int arr[] = {1, 3, 6, 2, 7, 1, 2, 8};
   int n = sizeof(arr) / sizeof(arr[0]);
   equiSum(arr, n);
