@@ -32,7 +32,6 @@ bool equiSumUtil(int arr[], int n) {
 
   int i = 0, j = n - 1;
   while (i < j - 1) {
-
     if (pre[i] == total_sum / 3) {
       pos1 = i;
     }
@@ -42,7 +41,6 @@ bool equiSumUtil(int arr[], int n) {
     }
 
     if (pos1 != -1 && pos2 != -1) {
-
       // We can also take pre[pos2 - 1] - pre[pos1] ==
       // total_sum / 3 here.
       if (suf[pos1 + 1] - suf[pos2] == total_sum / 3) {
@@ -62,11 +60,17 @@ bool equiSumUtil(int arr[], int n) {
   return false;
 }
 
+void printArray(int arr[], int n) {
+  cout << "Printing... " << endl;
+  for (int i = 0; i < n; i++)
+    cout << arr[i] << " ";
+}
+
 void equiSum(int arr[], int n) {
   bool ans = equiSumUtil(arr, n);
+  printArray(arr, n);
   if (ans) {
-
-    cout << "First Segment : ";
+    cout << "First Segment : holaaaaa";
     for (int i = 0; i <= pos1; i++) {
       cout << arr[i] << " ";
     }

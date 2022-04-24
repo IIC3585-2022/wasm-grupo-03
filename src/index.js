@@ -164,7 +164,7 @@ function getTextInput(grid) {
 
 // get text and transform to array of inputs
 function textToArray(text) {
-    return text.split(',').map(d => d.trim()).map(d => parseInt(d));
+    return text.split(',').map(Number);
 }
 
 function configureButton(grid) {
@@ -303,9 +303,8 @@ const thirdTaskManager = () => {
 
 // Initial Load
 async function initialLoad() {
-
-    await firstTaskManager(first_task_div);
-    await thirdTaskManager();
+    firstTaskManager(first_task_div);
+    thirdTaskManager();
 }
 
 initialLoad().then(() => {
