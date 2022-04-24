@@ -1,11 +1,41 @@
+<!DOCTYPE html>
+<html>
+
 <head>
-  <meta charset="utf-8">
-  <title>WASM & JS triplet implementation</title>
-  <link rel="stylesheet" href="./src/css/styles/index.css">
-  <link rel="shortcut icon" href="#">
-  <script type="module" src="src/attacher.js "></script>
+    <title> T3 WASM </title>
+    <meta charset=" UTF-8 ">
+    <link rel="stylesheet" href="assets\style.css">
+
 </head>
 
 <body>
-  <input type="text" id="numbers" name="numbers" >
+
+    <div class="container">
+        <div class="left-column">
+            <p id="title" class="title">3-Partition</p>
+            <div class="canasta-selector">
+                <div class="selector-card" id="first-task">
+                    <p id="amount-leyend">Entrega tu Lista:</p>
+                    <input type="text" name="amount" id="input-array" autocomplete="off">
+                    <div class="form-buttons">
+                        <button id="add-array" class="btn btn-primary blue">Enviar</button>
+                    </div>
+                </div>
+            </div>
+            <div class="layer-card" id="layer-card">
+                <p>Canasta de Soluciones</p>
+                <hr>
+            </div>
+        </div>
+
+        <div class="right-column">
+            <div class="resume"></div>
+            <div class="graph" id="third-task"></div>
+        </div>
+    </div>
+
+    <script src='.\src\index.js' type="module"></script>
+
 </body>
+
+</html>
