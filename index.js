@@ -1,4 +1,7 @@
 import * as d3 from 'd3';
+js_implem = require("./src/js_implementation.js")
+c_implem = require("./src/c_implementation.js")
+
 // use como apoyo mis codigos de actividades pasadas.
 
 // Variables Globales
@@ -76,23 +79,18 @@ graph
 
 const algorithm_solver = (algorithm) => {
     const solver = algorithm;
-    const firstArray = [];
-    const secondArray = [];
-    const thirdArray = [];
+    let answer = "";
     let time = 0;
 
     return {
-        getArrays() {
-            return { firstArray, secondArray, thirdArray };
+        getAnswer() {
+            return answer;
         },
         solveArray(array) {
             // start timer
             const start = new Date();
             // solve
-            const solution = solver(array);
-            firstArray.push([]);
-            secondArray.push([]);
-            thirdArray.push([]);
+            answer = solver(array);
             // stop timer
             const end = new Date();
             // calculate time
@@ -106,8 +104,8 @@ const algorithm_solver = (algorithm) => {
 
 const production = () => {
     const data = [];
-    const jsSolution = algorithm_solver(([]) => { [], [], [] });
-    const wasmSolution = algorithm_solver(([]) => { [], [], [] });
+    const jsSolution = algorithm_solver(js_implem.caller);
+    const wasmSolution = algorithm_solver(c_implem.caller);
 
     return {
         async postData(array) {
@@ -123,10 +121,10 @@ const production = () => {
             await wasmSolution.solveArray(data);
         },
         getJsSolution() {
-            return jsSolution.getArrays();
+            return jsSolution.getAnswer();
         },
         getWasmSolution() {
-            return wasmSolution.getArrays();
+            return wasmSolution.getAnswer();
         },
         getJsTime() {
             return jsSolution.getTime();
@@ -138,13 +136,13 @@ const production = () => {
             return [
                 {
                     time: jsSolution.getTime(),
-                    array: jsSolution.getArrays(),
+                    answer: jsSolution.getAnswer(),
                     agent: "js",
                     color: COLORS[0]
                 },
                 {
                     time: wasmSolution.getTime(),
-                    array: wasmSolution.getArrays(),
+                    answer: wasmSolution.getAnswer(),
                     agent: "wasm",
                     color: COLORS[1]
                 }
@@ -164,7 +162,7 @@ function getTextInput(grid) {
 
 // get text and transform to array of inputs
 function textToArray(text) {
-    return text.split(',').map(d => d.trim()).map(d => parseInt(d));
+    return text.split(',').map(Number);
 }
 
 function configureButton(grid) {
