@@ -111,5 +111,3 @@ function equiSum(arr)
 	}
 }
 
-let arr =[1, 3, 6, 2, 7, 1, 2, 8];
-equiSum(arr);

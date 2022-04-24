@@ -1,4 +1,4 @@
 EMCC=emcc
 
-all: src/main.cpp
-	$(EMCC) -03 src/main.cpp -s WASM=1 -o main.js
+all: src/algorithm.cpp
+	$(EMCC) src/algorithm.cpp -s WASM=1 -o src/c_implementation.js

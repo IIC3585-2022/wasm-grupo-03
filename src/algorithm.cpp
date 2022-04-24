@@ -92,8 +92,7 @@ void equiSum(int arr[], int n) {
 }
 
 // Driver code
-extern "C++" int main() {
-  int arr[] = {1, 3, 6, 2, 7, 1, 2, 8};
+int caller(int arr[]) {
   int n = sizeof(arr) / sizeof(arr[0]);
   equiSum(arr, n);
   return 0;
