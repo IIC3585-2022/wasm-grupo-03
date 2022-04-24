@@ -82,7 +82,6 @@ function equiSum(arr) {
 		for (let i = pos2; i < arr.length; i++) {
 			string += arr[i] + ", ";
 		}
-
 	}
 	else {
 		string = "Array cannot be divided into three equal sum segments";
@@ -95,3 +94,4 @@ function caller(arr) {
 	return equiSum(arr);
 }
 
+module.exports = { caller };

@@ -1,6 +1,7 @@
 import * as d3 from 'd3';
 js_implem = require("./src/js_implementation.js")
-c_implem = require("./src/c_implementation.js")
+c_implem = require("./src/module_implementation.js")
+
 
 // use como apoyo mis codigos de actividades pasadas.
 
@@ -78,7 +79,6 @@ graph
     .style("font-size", 15);
 
 const algorithm_solver = (algorithm) => {
-    const solver = algorithm;
     let answer = "";
     let time = 0;
 
@@ -90,7 +90,7 @@ const algorithm_solver = (algorithm) => {
             // start timer
             const start = new Date();
             // solve
-            answer = solver(array);
+            answer = algorithm(array);
             // stop timer
             const end = new Date();
             // calculate time
@@ -109,7 +109,8 @@ const production = () => {
 
     return {
         async postData(array) {
-            await data.push(array);
+            data.length = 0;
+            await data.push(...array);
         },
         getData() {
             return data;
@@ -175,8 +176,8 @@ function configureButton(grid) {
                 // Add to SOLUTION
                 SOLUTION.postData(array_parsed).then(() => {
                     // Start solvers
-                    SOLUTION.startJsSolution().then(() => { console.log("js finished") });
-                    SOLUTION.startWasmSolution().then(() => { console.log("wasm finished") });
+                    SOLUTION.startJsSolution().then(() => { console.log(SOLUTION.getJsSolution()); });
+                    SOLUTION.startWasmSolution().then(() => { console.log(SOLUTION.getWasmSolution()); });
                 }).then(() => {
                     // Get  resume
                     return SOLUTION.getResume();

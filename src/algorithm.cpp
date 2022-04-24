@@ -1,5 +1,6 @@
 // C++ implementation of the approach
 #include <iostream>
+
 using namespace std;
 
 // First segment's end index
@@ -63,7 +64,6 @@ bool equiSumUtil(int arr[], int n) {
 string equiSum(int arr[], int n) {
   bool ans = equiSumUtil(arr, n);
   string answer = "";
-
   if (ans) {
     answer += "First Segment : ";
     for (int i = 0; i <= pos1; i++) {
@@ -86,14 +86,18 @@ string equiSum(int arr[], int n) {
   } else {
     answer = "Array cannot be divided into three equal sum segments";
   }
-
+  cout << answer;
   return answer;
 }
 
 // Driver code
+extern "C" {
 string caller(int arr[]) {
   int n = sizeof(arr) / sizeof(arr[0]);
-  return equiSum(arr, n);
+  string res = equiSum(arr, n);
+  cout << endl << res << endl;
+  return res;
+}
 }
 
 // This code is contributed by mits
