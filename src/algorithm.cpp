@@ -61,41 +61,39 @@ bool equiSumUtil(int arr[], int n) {
   return false;
 }
 
-string equiSum(int arr[], int n) {
-  bool ans = equiSumUtil(arr, n);
-  string answer = "";
-  cout << "ans: " << ans << endl;
-  if (ans) {
-    answer += "First Segment : ";
-    for (int i = 0; i <= pos1; i++) {
-      answer += arr[i] + ", ";
-    }
+// string equiSum(int arr[], int n) {
+//   bool ans = equiSumUtil(arr, n);
+//   string answer = "";
+//   cout << "ans: " << ans << endl;
+//   if (ans) {
+//     answer += "First Segment : ";
+//     for (int i = 0; i <= pos1; i++) {
+//       answer += arr[i] + ", ";
+//     }
 
-    answer += "and ";
+//     answer += "and ";
 
-    answer += "Second Segment : ";
-    for (int i = pos1 + 1; i < pos2; i++) {
-      answer += arr[i] + ", ";
-    }
+//     answer += "Second Segment : ";
+//     for (int i = pos1 + 1; i < pos2; i++) {
+//       answer += arr[i] + ", ";
+//     }
 
-    answer += "and ";
+//     answer += "and ";
 
-    answer += "Third Segment : ";
-    for (int i = pos2; i < n; i++) {
-      answer += arr[i] + ", ";
-    }
-  } else {
-    answer = "Array cannot be divided into three equal sum segments";
-  }
-  return answer;
-}
+//     answer += "Third Segment : ";
+//     for (int i = pos2; i < n; i++) {
+//       answer += arr[i] + ", ";
+//     }
+//   } else {
+//     answer = "Array cannot be divided into three equal sum segments";
+//   }
+//   return answer;
+// }
 
 // Driver code
 extern "C" {
-string caller(int* arr, int n) {
-  string res = equiSum(arr, n);
-  cout << arr[1] << endl;
-  return res;
+bool caller(int* arr, int n) {
+  return equiSumUtil(arr, n);
 }
 }
 
