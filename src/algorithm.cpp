@@ -64,6 +64,7 @@ bool equiSumUtil(int arr[], int n) {
 string equiSum(int arr[], int n) {
   bool ans = equiSumUtil(arr, n);
   string answer = "";
+  cout << "ans: " << ans << endl;
   if (ans) {
     answer += "First Segment : ";
     for (int i = 0; i <= pos1; i++) {
@@ -86,16 +87,14 @@ string equiSum(int arr[], int n) {
   } else {
     answer = "Array cannot be divided into three equal sum segments";
   }
-  cout << answer;
   return answer;
 }
 
 // Driver code
 extern "C" {
-string caller(int arr[]) {
-  int n = sizeof(arr) / sizeof(arr[0]);
+string caller(int* arr, int n) {
   string res = equiSum(arr, n);
-  cout << endl << res << endl;
+  cout << arr[1] << endl;
   return res;
 }
 }
