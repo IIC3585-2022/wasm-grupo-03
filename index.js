@@ -12,7 +12,7 @@ let COLORS = ['blue', 'red'];
 let Y_LAYOUT = 'Tiempo';
 // Dimensiones graph
 const width = 800;
-const height = 600;
+const height = 500;
 const margin = {
     top: 60,
     bottom: 50,
@@ -182,12 +182,10 @@ function configureButton(grid) {
                     SOLUTION.startJsSolution().then(() => { console.log(SOLUTION.getJsSolution()); });
                     SOLUTION.startWasmSolution().then(() => { console.log(SOLUTION.getWasmSolution()); });
                 }).then(() => {
-                    // Get  resume
-                    return SOLUTION.getResume();
-                }).then((resume) => {
                     // Update graph
-                    SELECTED_ARRAY = resume;
+                    SELECTED_ARRAY = SOLUTION.getResume();
                     thirdTaskManager();
+                    updateResume(layers, SOLUTION.getResume());
                     //updateGraph(resume);
                 });
                 // Update selected food info
@@ -197,6 +195,51 @@ function configureButton(grid) {
                 alert('Ingrese una cadena de caracteres valida');
             }
         });
+}
+
+// Put Resume in html grid
+function updateResume(grid, data) {
+    // agentResume(grid.select('#resume'), SELECTED_ARRAY[0]);
+    // agentResume(grid.select('#resume'), SELECTED_ARRAY[1]);
+    grid.select('#resume').select('#agent-info')
+        .selectAll('p')
+        .remove();
+
+    grid.select('#resume').select('#agent-info')
+        .append('p')
+        .attr('class', 'resume-item')
+        .style('color', 'black')
+        .style('font-size', '15px')
+        .style('padding', '5px')
+        .style('margin', '5px')
+        .style('border-radius', '5px')
+        .style('text-align', 'center')
+        .style('width', '100px')
+        .style('height', '100px')
+        .style('display', 'inline-block')
+        .style('float', 'left')
+        .text(`${data[0].agent} took ${data[0].time} ms and ${data[1].agent} took ${data[1].time} ms`);
+
+    // delete previous p resume-solution
+    grid.select('#resume').select('#resume-solution')
+        .selectAll('p')
+        .remove();
+
+    grid.select('#resume').select('#resume-solution')
+        .append('p')
+        .attr('class', 'resume-item')
+        .style('color', 'black')
+        .style('font-size', '15px')
+        .style('padding', '5px')
+        .style('margin', '5px')
+        .style('border-radius', '5px')
+        .style('text-align', 'center')
+        .style('width', '100px')
+        .style('height', '100px')
+        .style('display', 'inline-block')
+        .style('float', 'left')
+        .text('Solution: ' + data[0].answer);
+
 }
 
 
