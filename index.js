@@ -1,4 +1,9 @@
 import * as d3 from 'd3';
+js_implem = require("./src/js_implementation.js")
+c_implem = require("./src/module_implementation.js")
+const hooks = require('perf_hooks');
+
+
 // use como apoyo mis codigos de actividades pasadas.
 
 // Variables Globales
@@ -7,7 +12,7 @@ let COLORS = ['blue', 'red'];
 let Y_LAYOUT = 'Tiempo';
 // Dimensiones graph
 const width = 800;
-const height = 600;
+const height = 500;
 const margin = {
     top: 60,
     bottom: 50,
@@ -75,28 +80,24 @@ graph
     .style("font-size", 15);
 
 const algorithm_solver = (algorithm) => {
-    const solver = algorithm;
-    const firstArray = [];
-    const secondArray = [];
-    const thirdArray = [];
+    let answer = "";
     let time = 0;
 
     return {
-        getArrays() {
-            return { firstArray, secondArray, thirdArray };
+        getAnswer() {
+            return answer;
         },
         solveArray(array) {
             // start timer
-            const start = new Date();
+            var startTime = Date.now();
             // solve
-            const solution = solver(array);
-            firstArray.push([]);
-            secondArray.push([]);
-            thirdArray.push([]);
+            answer = algorithm(array);
             // stop timer
-            const end = new Date();
+            var endTime = Date.now();
             // calculate time
-            time = end - start;
+            time = endTime - startTime;
+            console.log(startTime);
+            console.log(endTime);
         },
         getTime() {
             return time;
@@ -106,12 +107,13 @@ const algorithm_solver = (algorithm) => {
 
 const production = () => {
     const data = [];
-    const jsSolution = algorithm_solver(([]) => { [], [], [] });
-    const wasmSolution = algorithm_solver(([]) => { [], [], [] });
+    const jsSolution = algorithm_solver(js_implem.caller);
+    const wasmSolution = algorithm_solver(c_implem.caller);
 
     return {
         async postData(array) {
-            await data.push(array);
+            data.length = 0;
+            await data.push(...array);
         },
         getData() {
             return data;
@@ -123,10 +125,10 @@ const production = () => {
             await wasmSolution.solveArray(data);
         },
         getJsSolution() {
-            return jsSolution.getArrays();
+            return jsSolution.getAnswer();
         },
         getWasmSolution() {
-            return wasmSolution.getArrays();
+            return wasmSolution.getAnswer();
         },
         getJsTime() {
             return jsSolution.getTime();
@@ -138,13 +140,13 @@ const production = () => {
             return [
                 {
                     time: jsSolution.getTime(),
-                    array: jsSolution.getArrays(),
+                    answer: jsSolution.getAnswer(),
                     agent: "js",
                     color: COLORS[0]
                 },
                 {
                     time: wasmSolution.getTime(),
-                    array: wasmSolution.getArrays(),
+                    answer: wasmSolution.getAnswer(),
                     agent: "wasm",
                     color: COLORS[1]
                 }
@@ -164,7 +166,7 @@ function getTextInput(grid) {
 
 // get text and transform to array of inputs
 function textToArray(text) {
-    return text.split(',').map(d => d.trim()).map(d => parseInt(d));
+    return text.split(',').map(Number);
 }
 
 function configureButton(grid) {
@@ -177,15 +179,13 @@ function configureButton(grid) {
                 // Add to SOLUTION
                 SOLUTION.postData(array_parsed).then(() => {
                     // Start solvers
-                    SOLUTION.startJsSolution().then(() => { console.log("js finished") });
-                    SOLUTION.startWasmSolution().then(() => { console.log("wasm finished") });
+                    SOLUTION.startJsSolution().then(() => { console.log(SOLUTION.getJsSolution()); });
+                    SOLUTION.startWasmSolution().then(() => { console.log(SOLUTION.getWasmSolution()); });
                 }).then(() => {
-                    // Get  resume
-                    return SOLUTION.getResume();
-                }).then((resume) => {
                     // Update graph
-                    SELECTED_ARRAY = resume;
+                    SELECTED_ARRAY = SOLUTION.getResume();
                     thirdTaskManager();
+                    updateResume(layers, SOLUTION.getResume());
                     //updateGraph(resume);
                 });
                 // Update selected food info
@@ -195,6 +195,51 @@ function configureButton(grid) {
                 alert('Ingrese una cadena de caracteres valida');
             }
         });
+}
+
+// Put Resume in html grid
+function updateResume(grid, data) {
+    // agentResume(grid.select('#resume'), SELECTED_ARRAY[0]);
+    // agentResume(grid.select('#resume'), SELECTED_ARRAY[1]);
+    grid.select('#resume').select('#agent-info')
+        .selectAll('p')
+        .remove();
+
+    grid.select('#resume').select('#agent-info')
+        .append('p')
+        .attr('class', 'resume-item')
+        .style('color', 'black')
+        .style('font-size', '15px')
+        .style('padding', '5px')
+        .style('margin', '5px')
+        .style('border-radius', '5px')
+        .style('text-align', 'center')
+        .style('width', '100px')
+        .style('height', '100px')
+        .style('display', 'inline-block')
+        .style('float', 'left')
+        .text(`${data[0].agent} took ${data[0].time} ms and ${data[1].agent} took ${data[1].time} ms`);
+
+    // delete previous p resume-solution
+    grid.select('#resume').select('#resume-solution')
+        .selectAll('p')
+        .remove();
+
+    grid.select('#resume').select('#resume-solution')
+        .append('p')
+        .attr('class', 'resume-item')
+        .style('color', 'black')
+        .style('font-size', '15px')
+        .style('padding', '5px')
+        .style('margin', '5px')
+        .style('border-radius', '5px')
+        .style('text-align', 'center')
+        .style('width', '100px')
+        .style('height', '100px')
+        .style('display', 'inline-block')
+        .style('float', 'left')
+        .text('Solution: ' + data[0].answer);
+
 }
 
 
