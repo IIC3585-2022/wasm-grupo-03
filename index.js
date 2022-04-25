@@ -1,6 +1,7 @@
 import * as d3 from 'd3';
 js_implem = require("./src/js_implementation.js")
 c_implem = require("./src/module_implementation.js")
+const hooks = require('perf_hooks');
 
 
 // use como apoyo mis codigos de actividades pasadas.
@@ -88,13 +89,15 @@ const algorithm_solver = (algorithm) => {
         },
         solveArray(array) {
             // start timer
-            const start = new Date();
+            var startTime = Date.now();
             // solve
             answer = algorithm(array);
             // stop timer
-            const end = new Date();
+            var endTime = Date.now();
             // calculate time
-            time = end - start;
+            time = endTime - startTime;
+            console.log(startTime);
+            console.log(endTime);
         },
         getTime() {
             return time;
