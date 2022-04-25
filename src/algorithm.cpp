@@ -1,5 +1,6 @@
 // C++ implementation of the approach
 #include <iostream>
+
 using namespace std;
 
 // First segment's end index
@@ -32,7 +33,6 @@ bool equiSumUtil(int arr[], int n) {
 
   int i = 0, j = n - 1;
   while (i < j - 1) {
-
     if (pre[i] == total_sum / 3) {
       pos1 = i;
     }
@@ -42,7 +42,6 @@ bool equiSumUtil(int arr[], int n) {
     }
 
     if (pos1 != -1 && pos2 != -1) {
-
       // We can also take pre[pos2 - 1] - pre[pos1] ==
       // total_sum / 3 here.
       if (suf[pos1 + 1] - suf[pos2] == total_sum / 3) {
@@ -62,40 +61,40 @@ bool equiSumUtil(int arr[], int n) {
   return false;
 }
 
-void equiSum(int arr[], int n) {
-  bool ans = equiSumUtil(arr, n);
-  if (ans) {
+// string equiSum(int arr[], int n) {
+//   bool ans = equiSumUtil(arr, n);
+//   string answer = "";
+//   cout << "ans: " << ans << endl;
+//   if (ans) {
+//     answer += "First Segment : ";
+//     for (int i = 0; i <= pos1; i++) {
+//       answer += arr[i] + ", ";
+//     }
 
-    cout << "First Segment : ";
-    for (int i = 0; i <= pos1; i++) {
-      cout << arr[i] << " ";
-    }
+//     answer += "and ";
 
-    cout << endl;
+//     answer += "Second Segment : ";
+//     for (int i = pos1 + 1; i < pos2; i++) {
+//       answer += arr[i] + ", ";
+//     }
 
-    cout << "Second Segment : ";
-    for (int i = pos1 + 1; i < pos2; i++) {
-      cout << arr[i] << " ";
-    }
+//     answer += "and ";
 
-    cout << endl;
-
-    cout << "Third Segment : ";
-    for (int i = pos2; i < n; i++) {
-      cout << arr[i] << " ";
-    }
-
-    cout << endl;
-  } else {
-    cout << "Array cannot be divided into three equal sum segments";
-  }
-}
+//     answer += "Third Segment : ";
+//     for (int i = pos2; i < n; i++) {
+//       answer += arr[i] + ", ";
+//     }
+//   } else {
+//     answer = "Array cannot be divided into three equal sum segments";
+//   }
+//   return answer;
+// }
 
 // Driver code
-int caller(int arr[]) {
-  int n = sizeof(arr) / sizeof(arr[0]);
-  equiSum(arr, n);
-  return 0;
+extern "C" {
+bool caller(int* arr, int n) {
+  return equiSumUtil(arr, n);
+}
 }
 
 // This code is contributed by mits
